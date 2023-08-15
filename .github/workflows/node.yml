@@ -21,6 +21,7 @@ jobs:
           script: |
             # Commands to run on the remote server
             cd node-chat-socket-io/
+            git stash
             git pull
             chmod +x deploy-script.sh
             sudo ./deploy-script.sh
