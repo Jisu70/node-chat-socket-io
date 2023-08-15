@@ -18,5 +18,8 @@ jobs:
           ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
 
       - name: SSH into EC2
-        run: ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_PRIVATE_KEY }} ubuntu@${{ secrets.EC2_HOST }} 'bash -s' < deploy-script.sh
+        run: |
+          echo "$SSH_PRIVATE_KEY" | base64 --decode > ssh_key
+          chmod 600 ssh_key
+          ssh -i ssh_key ubuntu@${{ secrets.EC2_HOST }} 'bash -s' < deploy-script.sh
 
