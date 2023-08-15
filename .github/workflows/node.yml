@@ -21,5 +21,5 @@ jobs:
         run: |
           echo "$SSH_PRIVATE_KEY" | base64 --decode > ssh_key
           chmod 600 ssh_key
-          ssh -i ssh_key ubuntu@${{ secrets.EC2_HOST }} 'bash -s' < deploy-script.sh
+          ssh -i ssh_key ubuntu@${{ secrets.EC2_HOST }} 'bash -s' < ./deploy-script.sh
 
