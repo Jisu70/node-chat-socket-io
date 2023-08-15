@@ -12,14 +12,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.0
+      - name: Deploy using SSH
+        uses: appleboy/ssh-action@master
         with:
-          ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-
-      - name: SSH into EC2
-        run: |
-          echo "$SSH_PRIVATE_KEY" | base64 --decode > ssh_key
-          chmod 600 ssh_key
-          ssh -i ssh_key ubuntu@${{ secrets.EC2_HOST }} 'bash -s' < deploy-script.sh
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          script: |
+            # Commands to run on the remote server
+            cd node-chat-socket-io/
+            sudo ./deploy-script.sh
 
